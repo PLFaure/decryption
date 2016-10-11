@@ -5,6 +5,11 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
  
+/**
+ * 
+ * @author Theo
+ *
+ */
 public class DecryptionUtils
 {  
     public String slideString(String text, int nb)
