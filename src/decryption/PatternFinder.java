@@ -1,5 +1,6 @@
 package decryption;
 
+import java.security.InvalidParameterException;
 import java.util.*;
 
 /**
@@ -9,15 +10,44 @@ import java.util.*;
  *
  */
 public class PatternFinder {
-	protected final String text="futptnheovduhdjstcgeiltpauhttrgiqltstcgeidtctmdnsehegaxtfuxlcypiiajcjnherrttfuxstvtnvetnherrtttnherrtttnuaxtvldigeaehejlfuxsjrkiiajstcgeiehtaerotugldrhqjeaekicectgeaeherrtthogtjngobacddiitduyojrhcdniecigucstcgeiptuieirtqjeaaregtxtjdtehttlaeaeherrttsehldnvutsuiseaiiehlpmdrictstcgeiqjippeagtxecdgaptduiltmdnseeegsdncecevagdtucstcgeicdmbejntnuactaakaaejrsuctgehogrtsxdtdpnhsdnherrttjnherrttcemihttqjehiaehtrocnjdtqjeaqjucpdugqjesebejrtltstcgeinduhtpigocsyuhqjajsxltnreaeherrttseaesuraiidngehisesacsaegehptcidtltltvtltstcgeidjsjcrehehtsouftnhegltpauhggacdcobbgeeohsxbaesevecstsiucfdufuxrtvtltahauebmtctqjiavtuigprsegstcgeitduiegekeaaiidnsucstcgeiehtaauajttqjesereauxqjiaarocfxeaeherrttsegejshigctsidttgepdgoxtcocdttgejtxltojtaebocdtajnherrttsehigdttdncegltspuirtsaarocfxacctecsditsiltpgebitrherrttsuhurctsaeherrttseaagejshiiepvtcjntnuactrehtseceeaheirtstseagecthltstcgeidjsjcrehntsippsrocnjqjeserejxfuxndnippsgejshi";
-	protected List<Pattern> patternList;
 	
 	/**
 	 * Pattern finder initialization.
 	 */
 	public PatternFinder()
 	{
-		this.patternList = new ArrayList<Pattern>();
+		
+	}
+	
+	/**
+	 * Find all the patterns in the text.
+	 * 
+	 * @param size int The size of the patterns to find
+	 * 
+	 * @throws Exception 
+	 */
+	public List<Pattern> findPatterns(String text, int size) throws InvalidParameterException
+	{
+		List<Pattern> patternList = new ArrayList<Pattern>();
+		int textLength = text.length();
+		if(size>= textLength) {
+			throw new InvalidParameterException("Size of the pattern out of range.");
+		}
+		int first = 0;
+		int last = size;
+		while(last<textLength) {
+			String word = text.substring(first, last);
+			if(this.isPresentWord(patternList, word)) {
+				int index = this.indexOfWord(patternList, word);
+				patternList.get(index).increment(first);
+			} else {
+				Pattern pattern = new Pattern(word, first);
+				patternList.add(pattern);
+			}
+			first++;
+			last++;
+		}
+		return patternList;
 	}
 	
 	/**
@@ -27,13 +57,13 @@ public class PatternFinder {
 	 * 
 	 * @return int The position of the pattern
 	 */
-	public int indexOfWord(String word)
+	public int indexOfWord(List<Pattern> patternList, String word)
 	{
 		int i = 0;
 		boolean present = false;
-		int n = this.patternList.size();
+		int n = patternList.size();
 		while(i<n && !present) {
-			if(this.patternList.get(i).word.equals(word)) {
+			if(patternList.get(i).word.equals(word)) {
 				present = true;
 			}
 			i++;
@@ -51,74 +81,36 @@ public class PatternFinder {
 	 * 
 	 * @return boolean True if the pattern is present, false otherwise
 	 */
-	public boolean isPresentWord(String word)
+	public boolean isPresentWord(List<Pattern> patternList, String word)
 	{
 		int i = 0;
 		boolean present = false;
-		int n = this.patternList.size();
+		int n = patternList.size();
 		while(i<n && !present) {
-			if(this.patternList.get(i).word.equals(word)) {
+			if(patternList.get(i).word.equals(word)) {
 				present = true;
 			}
 			i++;
 		}
 		return present;
 	}
-	
-	/**
-	 * Gives the patterns list.
-	 * 
-	 * @return List The patterns list
-	 */
-	public List<Pattern> getPatternsList()
-	{
-		return this.patternList;
-	}
+
 	
 	/**
 	 * Clean the elements of the lists where the occurrence is less than 2.
 	 */
-	public void cleanList()
+	public void cleanList(List<Pattern> patternList)
 	{
-		for(int i=0;i<this.patternList.size();i++) {
-			if(this.patternList.get(i).occurrence == 1) {
-				this.patternList.remove(i);
+		for(int i=0;i<patternList.size();i++) {
+			if(patternList.get(i).occurrence == 1) {
+				patternList.remove(i);
 				i--;
 			}
 		}
 	}
 	
-	public void orderList()
+	public void orderList(List<Pattern> patternList)
 	{
-		Collections.sort(this.patternList, Collections.reverseOrder());
-	}
-	
-	/**
-	 * Find all the patterns in the text.
-	 * 
-	 * @param size int The size of the patterns to find
-	 * 
-	 * @throws Exception 
-	 */
-	public void findPatterns(int size) throws Exception
-	{
-		int textLength = this.text.length();
-		if(size>= textLength) {
-			throw new Exception("Size of the pattern out of range.");
-		}
-		int first = 0;
-		int last = size;
-		while(last<textLength) {
-			String word = this.text.substring(first, last);
-			if(this.isPresentWord(word)) {
-				int index = this.indexOfWord(word);
-				this.patternList.get(index).increment(first);
-			} else {
-				Pattern pattern = new Pattern(word, first);
-				this.patternList.add(pattern);
-			}
-			first++;
-			last++;
-		}
+		Collections.sort(patternList, Collections.reverseOrder());
 	}
 }

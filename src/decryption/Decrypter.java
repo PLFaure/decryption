@@ -1,5 +1,6 @@
 package decryption;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -11,18 +12,17 @@ import java.util.List;
 public class Decrypter {
 	
 	public static void main(String[] args) {
-		// TODO Auto-generated method stub
-		PatternFinder pf = new PatternFinder();
-		try {
-			pf.findPatterns(6);
-		} catch(Exception e) {
-			e.printStackTrace();
-		}
-		pf.cleanList();
-		pf.orderList();
-		List<Pattern> l = pf.getPatternsList();
-		for(Pattern p: l) {
-			System.out.println(p);
+		
+		String text= getText();
+		
+		PatternFinder patternFinder = new PatternFinder();
+		KeyFinder keyFinder = new KeyFinder();
+		List<Pattern> patternList = new ArrayList<Pattern>();
+		patternList = keyFinder.processPatterns(text, 8, 4);//patternFinder.findPatterns(text, 6);
+		/*patternFinder.cleanList(patternList);
+		patternFinder.orderList(patternList);*/
+		for(Pattern pattern: patternList) {
+			System.out.println(pattern);
 		}
 		
 		//TODO try Pattern.isPartOf()
@@ -32,5 +32,25 @@ public class Decrypter {
 		//TODO try KeyFinder.gcd()
 		//TODO try KeyFinder.minDIstance()
 		//TODO try KeyFinder.key()
+	}
+	
+	public static String getText()
+	{
+		return "futptnheovduhdjstcgeiltpauhttrgiqltstcgeidtctmdnsehegaxt"
+				+ "fuxlcypiiajcjnherrttfuxstvtnvetnherrtttnherrtttnuaxtvldige"
+				+ "aehejlfuxsjrkiiajstcgeiehtaerotugldrhqjeaekicectgeaeherrtt"
+				+ "hogtjngobacddiitduyojrhcdniecigucstcgeiptuieirtqjeaaregtxt"
+				+ "jdtehttlaeaeherrttsehldnvutsuiseaiiehlpmdrictstcgeiqjippea"
+				+ "gtxecdgaptduiltmdnseeegsdncecevagdtucstcgeicdmbejntnuactaa"
+				+ "kaaejrsuctgehogrtsxdtdpnhsdnherrttjnherrttcemihttqjehiaeht"
+				+ "rocnjdtqjeaqjucpdugqjesebejrtltstcgeinduhtpigocsyuhqjajsxl"
+				+ "tnreaeherrttseaesuraiidngehisesacsaegehptcidtltltvtltstcge"
+				+ "idjsjcrehehtsouftnhegltpauhggacdcobbgeeohsxbaesevecstsiucf"
+				+ "dufuxrtvtltahauebmtctqjiavtuigprsegstcgeitduiegekeaaiidnsu"
+				+ "cstcgeiehtaauajttqjesereauxqjiaarocfxeaeherrttsegejshigcts"
+				+ "idttgepdgoxtcocdttgejtxltojtaebocdtajnherrttsehigdttdncegl"
+				+ "tspuirtsaarocfxacctecsditsiltpgebitrherrttsuhurctsaeherrtt"
+				+ "seaagejshiiepvtcjntnuactrehtseceeaheirtstseagecthltstcgeid"
+				+ "jsjcrehntsippsrocnjqjeserejxfuxndnippsgejshi";
 	}
 }

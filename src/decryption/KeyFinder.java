@@ -1,7 +1,8 @@
 package decryption;
 
-import java.util.*;
-import java.math.*;
+import java.security.InvalidParameterException;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Key finder class.
@@ -21,36 +22,51 @@ public class KeyFinder extends PatternFinder {
 		distances = new ArrayList<Distance>();
 	}
 	
+	public List<Pattern> processPatterns(String text, int maxSize, int minSize)
+	{
+		List<Pattern> patternList = new ArrayList<Pattern>();
+		List<Pattern> tmp;
+		for (int size = maxSize; size >= minSize; size--) {
+			System.out.println("Finding pattern of size " + size);
+			tmp = findPatterns(text, size);
+			cleanList(tmp);
+			concatList(patternList, tmp); // TODO INIFNITE LOOOOOP
+		}
+		orderList(patternList);
+		return patternList;
+		
+	}
+	
 	/**
 	 * Concatenate the pattern list with another list of patterns.
 	 * The current list must have larger patterns than the list to add.
 	 * 
-	 * @param l The list to add
+	 * @param otherList The list to add
 	 * 
 	 * @throws Exception If the current list have smaller patterns
 	 */
-	public void concatList(List<Pattern> l) throws Exception
+	public void concatList(List<Pattern> patternList, List<Pattern> otherList) throws InvalidParameterException
 	{
 		int j;
-		Pattern e;
+		Pattern pattern;
 		//We travel the list in parameter
-		for(int i=0;i<l.size();i++) {
+		for(int i=0;i<otherList.size();i++) {
 			boolean partOf = false;
 			j = 0;
-			e = l.get(i); //The pattern element to add
+			pattern = otherList.get(i); //The pattern element to add
 			//We travel the current list
-			while((j<this.patternList.size()) && !partOf) {
+			while((j<patternList.size()) && !partOf) {
 				//If the word of e is larger than the one of the j-th element of the current list
-				if(e.word.length()>this.patternList.get(j).word.length()) {
-					throw new Exception("All the element of the list to add must be smaller than the one of the current list.");
+				if(pattern.word.length()>patternList.get(j).word.length()) {
+					throw new InvalidParameterException("All the element of the list to add must be smaller than the one of the current list.");
 				}
 				//We test if the element is a part of an element of the current list
-				partOf = this.patternList.get(j).isPartOf(e.word);
+				partOf = patternList.get(j).isPartOf(pattern.word);
 			}
 			//If the element is not a part of the current list
 			if(!partOf) {
 				//We add the element to the list
-				this.patternList.add(e);
+				patternList.add(pattern);
 			}
 		}
 	}
@@ -98,10 +114,10 @@ public class KeyFinder extends PatternFinder {
 		}
 	}
 	
-	public void calcDistances()
+	public void calcDistances(List<Pattern> patternList)
 	{
-		for(int i=0;i<this.patternList.size();i++) {
-			List<Integer> positions = this.patternList.get(i).positions;
+		for(int i=0;i<patternList.size();i++) {
+			List<Integer> positions = patternList.get(i).positions;
 			int prevPosition = 0;
 			for(int j=0;j<positions.size();j++) {
 				int currentPosition = positions.get(j);
@@ -138,6 +154,6 @@ public class KeyFinder extends PatternFinder {
 	
 	public String key()
 	{
-		
+		return null;
 	}
 }
