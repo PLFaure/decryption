@@ -29,19 +29,27 @@ public class Pattern implements Comparable<Pattern> {
 	/**
 	 * If the word is a part of the current word, or vice versa.
 	 * 
-	 * @param word The word to test
+	 * @param str The word to test
 	 * @return boolean True if one of the words is a part of the other
 	 */
-	public boolean isPartOf(String word)
+	public boolean isPartOf(String str)
 	{
-		boolean partOf = false;
-		if(this.word.length() > word.length()) {
-			int max = this.word.length()-word.length();
+		if(this.word.length() > str.length()) {
+			return (this.word.indexOf(str) != -1);
+		} else {
+			return (str.indexOf(this.word) != -1);
+		}
+		/*boolean partOf = false;
+		if(this.word.length() > str.length()) {
+			int max = this.word.length()-str.length();
 			int i = 0;
 			while((i<max) && !partOf) {
 				int j = 0;
 				while((j<this.word.length()) && !partOf) {
-					if(this.word.substring(j,i).equals(word)) {
+					if(j-i <= 0) {
+						System.out.println("N'importe quoi, c'est juste pour mettre un breakpoint.");
+					}
+					if(this.word.substring(j,i).equals(str)) {
 						partOf = true;
 					}
 					j++;
@@ -49,12 +57,12 @@ public class Pattern implements Comparable<Pattern> {
 				i++;
 			}
 		} else { //this.word.length() <= word.length()
-			int max = word.length()-this.word.length();
+			int max = str.length()-this.word.length();
 			int i = 0;
 			while((i<max) && !partOf) {
 				int j = 0;
-				while((j<word.length()) && !partOf) {
-					if(word.substring(j,i).equals(this.word)) {
+				while((j<str.length()) && !partOf) {
+					if(str.substring(j,i).equals(this.word)) {
 						partOf = true;
 					}
 					j++;
@@ -62,7 +70,7 @@ public class Pattern implements Comparable<Pattern> {
 				i++;
 			}
 		}
-		return partOf;
+		return partOf;*/
 	}
 	
 	/**

@@ -45,9 +45,10 @@ public class KeyFinder extends PatternFinder {
 	 * 
 	 * @throws Exception If the current list have smaller patterns
 	 */
-	public void concatList(List<Pattern> patternList, List<Pattern> otherList) throws InvalidParameterException
+	public void concatList(List<Pattern> patternList, List<Pattern> otherList) //throws InvalidParameterException
 	{
-		int j;
+		patternList.addAll(otherList);
+		/*int j;
 		Pattern pattern;
 		//We travel the list in parameter
 		for(int i=0;i<otherList.size();i++) {
@@ -62,13 +63,14 @@ public class KeyFinder extends PatternFinder {
 				}
 				//We test if the element is a part of an element of the current list
 				partOf = patternList.get(j).isPartOf(pattern.word);
+				j++;
 			}
 			//If the element is not a part of the current list
 			if(!partOf) {
 				//We add the element to the list
 				patternList.add(pattern);
 			}
-		}
+		}*/
 	}
 	
 	public boolean isPresentDistance(int value)
@@ -127,6 +129,7 @@ public class KeyFinder extends PatternFinder {
 		}
 	}
 	
+	/*
 	public int gcd(int m, int n)
 	{
 		int mod = 0;
@@ -156,4 +159,5 @@ public class KeyFinder extends PatternFinder {
 	{
 		return null;
 	}
+	*/
 }

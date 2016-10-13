@@ -21,17 +21,21 @@ public class Decrypter {
 		patternList = keyFinder.processPatterns(text, 8, 4);//patternFinder.findPatterns(text, 6);
 		/*patternFinder.cleanList(patternList);
 		patternFinder.orderList(patternList);*/
+		int p;
 		for(Pattern pattern: patternList) {
-			System.out.println(pattern);
+			for(int i=0; i<pattern.positions.size()-1; i++) {
+				p = pattern.positions.get(i+1) - pattern.positions.get(i);
+				pattern.positions.set(i, p);
+			}
+			pattern.positions.remove(pattern.positions.size()-1);
+			if(pattern.occurrence>10) {
+			System.out.println(pattern);}
 		}
 		
 		//TODO try Pattern.isPartOf()
 		//TODO try KeyFinder.concatList()
 		//TODO try KeyFinder.addDistance()
 		//TODO try KeyFinder.calcDistances()
-		//TODO try KeyFinder.gcd()
-		//TODO try KeyFinder.minDIstance()
-		//TODO try KeyFinder.key()
 	}
 	
 	public static String getText()
