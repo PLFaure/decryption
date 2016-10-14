@@ -23,7 +23,7 @@ public class Pattern implements Comparable<Pattern> {
 	/**
 	 * The possible key lenght, based on the gcd of the positions
 	 */
-	public int keyLenght;
+	public int keyLength;
 	
 	/**
 	 * Pattern initialization.
@@ -37,29 +37,14 @@ public class Pattern implements Comparable<Pattern> {
 		this.occurrence = 1;
 		this.positions = new ArrayList<Integer>();
 		this.positions.add(position);
-		this.keyLenght = 0;
-	}
-	
-	/**
-	 * If the word is a part of the current word, or vice versa.
-	 * 
-	 * @param str The word to test
-	 * @return boolean True if one of the words is a part of the other
-	 */
-	public boolean isPartOf(String str)
-	{
-		if(this.word.length() > str.length()) {
-			return (this.word.indexOf(str) != -1);
-		} else {
-			return (str.indexOf(this.word) != -1);
-		}
+		this.keyLength = 0;
 	}
 	
 	
 	@Override
 	public String toString()
 	{
-		return "\"" + this.word + "\" occurrences: " + this.occurrence + " - probable key lenght: " + this.keyLenght;
+		return "\"" + this.word + "\" occurrences: " + this.occurrence + " - probable key lenght: " + this.keyLength;
 	}
 
 	@Override

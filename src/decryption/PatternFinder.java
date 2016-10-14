@@ -21,11 +21,11 @@ public class PatternFinder {
 	
 	/**
 	 * Finds all patterns between size <code>maxSize</code> and <code>minSize</code> that appear at least twice in the text.
-	 * Also find a probable key lenght for each of them.
+	 * Also find a probable key length for each of them.
 	 * @param text the text to find patterns in
 	 * @param maxSize the max size of the patterns to look for
 	 * @param minSize the min size of the patterns to look for
-	 * @return a list of patterns sorted by number of occurences
+	 * @return a list of patterns sorted by number of occurrences
 	 */
 	public List<Pattern> execute(String text, int maxSize, int minSize)
 	{
@@ -38,14 +38,14 @@ public class PatternFinder {
 		}
 		combinePatterns(patternList);
 		orderList(patternList);
-		guessKeyLenghts(patternList);
+		guessKeyLengths(patternList);
 		return patternList;
 		
 	}
 	
 	/**
-	 * Runs through the array and remove patterns of different lenghts that probably come from the same place in the text.
-	 * This is based on the idea that two similar patterns with the exact same number of occurences
+	 * Runs through the array and remove patterns of different lengths that probably come from the same place in the text.
+	 * This is based on the idea that two similar patterns with the exact same number of occurrences
 	 * probably come from the same place
 	 * @param patternList
 	 */
@@ -55,8 +55,8 @@ public class PatternFinder {
 			pattern = patternList.get(i);
 			for (int j = i+1; j < patternList.size(); j++){ // check all following patterns
 				if (pattern.word.indexOf(patternList.get(j).word) != -1){ // if the words match
-					if (pattern.occurrence == patternList.get(j).occurrence){ // if it's the same number of occurences
-						patternList.remove(j); // they're very likely the same occurence; remove it.
+					if (pattern.occurrence == patternList.get(j).occurrence){ // if it's the same number of occurrences
+						patternList.remove(j); // they're very likely the same occurrence; remove it.
 						j--;
 					}
 				}
@@ -108,7 +108,7 @@ public class PatternFinder {
 	 * @param pattern
 	 * @return a probable key lenght
 	 */
-	private void guessKeyLenghts(List<Pattern> patternList){
+	private void guessKeyLengths(List<Pattern> patternList){
 		for (Pattern pattern : patternList){
 			ArrayList<Integer> positionOffset = new ArrayList<Integer>(pattern.positions);
 			for(int i=0; i<positionOffset.size()-1; i++) {
@@ -120,11 +120,11 @@ public class PatternFinder {
 			for (int i : positionOffset){
 				gcd = gcd(gcd, i);
 			}
-			pattern.keyLenght = gcd;
+			pattern.keyLength = gcd;
 		}
 	}
 	
-	public int gcd(int m, int n)
+	private int gcd(int m, int n)
 	{
 		int mod = 0;
 		while(n!=0) {
@@ -138,7 +138,7 @@ public class PatternFinder {
 	/**
 	 * Clean the elements of the lists where the occurrence is less than 2.
 	 */
-	public void cleanList(List<Pattern> patternList)
+	private void cleanList(List<Pattern> patternList)
 	{
 		for(int i=0;i<patternList.size();i++) {
 			if(patternList.get(i).occurrence == 1) {
@@ -149,10 +149,10 @@ public class PatternFinder {
 	}
 	
 	/**
-	 * Order list in order of occurences
+	 * Order list in order of occurrences
 	 * @param patternList
 	 */
-	public void orderList(List<Pattern> patternList)
+	private void orderList(List<Pattern> patternList)
 	{
 		Collections.sort(patternList, Collections.reverseOrder());
 	}

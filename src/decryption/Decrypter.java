@@ -13,8 +13,9 @@ public class Decrypter {
 	
 	public static void main(String[] args) {
 		
-		String text= getText();
+		String text= getAnotherText();
 		PatternFinder patternFinder = new PatternFinder();
+		KeyFinder keyFinder = new KeyFinder();
 		List<Pattern> patternList = new ArrayList<Pattern>();
 		
 		patternList = patternFinder.execute(text, 8, 4);
@@ -22,10 +23,8 @@ public class Decrypter {
 			System.out.println(patternList.get(i));
 		}
 		
-		//TODO try Pattern.isPartOf()
-		//TODO try KeyFinder.concatList()
-		//TODO try KeyFinder.addDistance()
-		//TODO try KeyFinder.calcDistances()
+		System.out.println("The most likely key is: " + keyFinder.execute(text, 4));
+		
 	}
 	
 	public static String getText()
@@ -46,5 +45,27 @@ public class Decrypter {
 				+ "tspuirtsaarocfxacctecsditsiltpgebitrherrttsuhurctsaeherrtt"
 				+ "seaagejshiiepvtcjntnuactrehtseceeaheirtstseagecthltstcgeid"
 				+ "jsjcrehntsippsrocnjqjeserejxfuxndnippsgejshi";
+	}
+	
+	public static String getAnotherText(){
+		return "nlcacadholsmkxuxhllbuziexlsmtpsvcaulgzteczonulsigjebuzuxflltfvmxuaivcaihpkuvjhtlc"
+				+ "bvtilmtotiygyevcynbxvrxfllthhmbnsewgzfxnpdxuplxualnpkelryigepptweagktanzkevqtp"
+				+ "tiuixgachowtxcbjhwydawpuggjigsbagvhiggkekcjelfpfygyegvlskgjogpbelrhregziguaage"
+				+ "lswgjekvpfbehtbqudtpzdxpvmutluqrhylnlcacaegvyewcusegjawtldxnhlxipsecaihpzuknls"
+				+ "vcynbxvrxukofgztbsbelcsiguaakfbcaklnxvkuywyemgzsxpaixnsefgutmgyrbvvrbcslxeoamg"
+				+ "ztnpwrxfhtxwydxrltbvlsitvixujofollxuyogilukuvuegzobulanzseleoamuvnmfpvxtzelxvc"
+				+ "tnpstvpogukogvseltvnkqunxolnmuselopannlmxpasegzfxwsefgutlqblxunrhiuefgutldpegs"
+				+ "bieujofobnbsbegvwrbpjiicsefguticydxuwolkaihpzftepaegzemevriqyeenlsxvkelroekqto"
+				+ "ggzsxnvnegzrxublmcaswgartxhuqolnxulnxvsevjhtwqtelvpqnglsmwuelqbsxuwevgkuvjhtlc"
+				+ "bvtilfxnpslksvxuarbupslwkageltkgzairhrmguagvhltuvulgzpxeldneoamuhuocnewcmrbsbe"
+				+ "ygsiluplogztkkzlrdpctnlsitlmbgyelfvmxuaivcaihpzanthixpaennpenksytchnlcbnxqsimj"
+				+ "pqngkagusevtviluhnmhlrmksexrvqngjoktlsiqudtpaanflbnvkeecjuevbrxflcxtlaegzemcse"
+				+ "giyagilmxpadxtlsxtcelubsvgwtbdselfltkghtmcxuxgzpttkeltvnzgbrlnlcacadxxlntpaaeq"
+				+ "ysiqbrejvmfgbntweiekhikgbtbnlsxryéttpaaeckofgztbehtbquthwadtdvrwxlnxtlpttselgn"
+				+ "yivpeguplywadbcioekzexplukqwetwtorguazgltggyemtvuoczelnltmtlswguounlslgxutwevb"
+				+ "kpelklceglntupeegjhtvyelvlsrpvnroldxeoageldxtpcagzsxqbdxnvnzgcimgjeygsigcsabuz"
+				+ "elquefryebpaewcusecjuevbrxrvpnnhikgltttailvpqngaagvhumthvxtzdxzwrxuzihpzphrblt"
+				+ "kyelsbewgyeitlsxpaamkvnlfpvxtzelcbsxkudxnhlbvaekcaukgkeecwebpaukgvuxpjokgkeect"
+				+ "ulkxux";
 	}
 }

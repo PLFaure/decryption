@@ -5,14 +5,9 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
  
-/**
- * 
- * @author Theo
- *
- */
 public class DecryptionUtils
 {  
-    public String slideString(String text, int nb)
+    public static String slideString(String text, int nb)
     {
         int []  temp= new int[text.length()];
         String output = "";
@@ -27,10 +22,10 @@ public class DecryptionUtils
         return output;
     }
    
-    public String textSplicer(String text, int nb)
+    public static List<String> textSplicer(String text, int nb)
     {
         String[]  slices= new String [nb];
-        String output = "";
+        ArrayList<String> output = new ArrayList<String>();
         int j=0;
         for (j=0;j<nb;j++)
         {
@@ -45,14 +40,13 @@ public class DecryptionUtils
         j=0;
         for (j=0;j<nb;j++)
         {
-            output += slices[j%nb];
-            output += "\n";
+            output.add(slices[j%nb]);
         }
         return output;
     }
  
    
-    public String spliceJoiner(String file) {
+    public static String spliceJoiner(String file) {
  
         ArrayList<String> splices = new ArrayList<String>();
         try {
@@ -66,7 +60,7 @@ public class DecryptionUtils
    
     }
  
-    private void readfile(String file, List<String> splices) throws IOException
+    private static void readfile(String file, List<String> splices) throws IOException
     {
             BufferedReader in = new BufferedReader(new FileReader(file)) ;
             String line;
@@ -78,7 +72,7 @@ public class DecryptionUtils
  
     }
    
-    private String merge(List<String> splices)
+    private static String merge(List<String> splices)
     {
         String text = "";
         int idx=0;;
