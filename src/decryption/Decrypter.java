@@ -14,22 +14,12 @@ public class Decrypter {
 	public static void main(String[] args) {
 		
 		String text= getText();
-		
 		PatternFinder patternFinder = new PatternFinder();
-		KeyFinder keyFinder = new KeyFinder();
 		List<Pattern> patternList = new ArrayList<Pattern>();
-		patternList = keyFinder.processPatterns(text, 8, 4);//patternFinder.findPatterns(text, 6);
-		/*patternFinder.cleanList(patternList);
-		patternFinder.orderList(patternList);*/
-		int p;
-		for(Pattern pattern: patternList) {
-			for(int i=0; i<pattern.positions.size()-1; i++) {
-				p = pattern.positions.get(i+1) - pattern.positions.get(i);
-				pattern.positions.set(i, p);
-			}
-			pattern.positions.remove(pattern.positions.size()-1);
-			if(pattern.occurrence>10) {
-			System.out.println(pattern);}
+		
+		patternList = patternFinder.execute(text, 8, 4);
+		for (int i = 0; i < 10; i++){
+			System.out.println(patternList.get(i));
 		}
 		
 		//TODO try Pattern.isPartOf()
@@ -40,7 +30,7 @@ public class Decrypter {
 	
 	public static String getText()
 	{
-		return "futptnheovduhdjstcgeiltpauhttrgiqltstcgeidtctmdnsehegaxt"
+		return    "futptnheovduhdjstcgeiltpauhttrgiqltstcgeidtctmdnsehegaxt"
 				+ "fuxlcypiiajcjnherrttfuxstvtnvetnherrtttnherrtttnuaxtvldige"
 				+ "aehejlfuxsjrkiiajstcgeiehtaerotugldrhqjeaekicectgeaeherrtt"
 				+ "hogtjngobacddiitduyojrhcdniecigucstcgeiptuieirtqjeaaregtxt"

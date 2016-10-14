@@ -8,9 +8,22 @@ import java.util.*;
  *
  */
 public class Pattern implements Comparable<Pattern> {
+	/**
+	 * The string of the pattern
+	 */
 	public String word;
+	/**
+	 * The number of time the pattern appears in the text
+	 */
 	public int occurrence;
+	/**
+	 * Each position where the pattern was found in the text
+	 */
 	public List<Integer> positions;
+	/**
+	 * The possible key lenght, based on the gcd of the positions
+	 */
+	public int keyLenght;
 	
 	/**
 	 * Pattern initialization.
@@ -24,6 +37,7 @@ public class Pattern implements Comparable<Pattern> {
 		this.occurrence = 1;
 		this.positions = new ArrayList<Integer>();
 		this.positions.add(position);
+		this.keyLenght = 0;
 	}
 	
 	/**
@@ -39,57 +53,13 @@ public class Pattern implements Comparable<Pattern> {
 		} else {
 			return (str.indexOf(this.word) != -1);
 		}
-		/*boolean partOf = false;
-		if(this.word.length() > str.length()) {
-			int max = this.word.length()-str.length();
-			int i = 0;
-			while((i<max) && !partOf) {
-				int j = 0;
-				while((j<this.word.length()) && !partOf) {
-					if(j-i <= 0) {
-						System.out.println("N'importe quoi, c'est juste pour mettre un breakpoint.");
-					}
-					if(this.word.substring(j,i).equals(str)) {
-						partOf = true;
-					}
-					j++;
-				}
-				i++;
-			}
-		} else { //this.word.length() <= word.length()
-			int max = str.length()-this.word.length();
-			int i = 0;
-			while((i<max) && !partOf) {
-				int j = 0;
-				while((j<str.length()) && !partOf) {
-					if(str.substring(j,i).equals(this.word)) {
-						partOf = true;
-					}
-					j++;
-				}
-				i++;
-			}
-		}
-		return partOf;*/
 	}
 	
-	/**
-	 * Increment the number of pattern occurrences.
-	 * 
-	 * @param position The position where the new occurrence was found
-	 * 
-	 * @return boolean True if the increment worked well, false otherwise
-	 */
-	public boolean increment(int position)
-	{
-		this.occurrence++;
-		return this.positions.add(position);
-	}
 	
 	@Override
 	public String toString()
 	{
-		return "Word: " + this.word + " ; occurrence: " + this.occurrence + " ; Positions: " + this.positions.toString() + "\n";
+		return "\"" + this.word + "\" occurrences: " + this.occurrence + " - probable key lenght: " + this.keyLenght;
 	}
 
 	@Override
