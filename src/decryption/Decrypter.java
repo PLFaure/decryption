@@ -15,8 +15,10 @@ public class Decrypter {
 	
 	public static void main(String[] args) {
 		
-		// Initialize
 		int keyLength = 2; // MANUALLY CHANGE THIS VALUE TO FIND KEY
+		String key = "pa"; // MANUALLY CHANGE THIS VALUE TO DECRYPT TEXT
+		
+		// Initialize
 		String text= getText();
 		PatternFinder patternFinder = new PatternFinder();
 		KeyFinder keyFinder = new KeyFinder();
@@ -32,14 +34,17 @@ public class Decrypter {
 		
 		// Find the key
 		possibleChars = keyFinder.execute(text, keyLength);
-		System.out.println("\nMost likely character for each letter in the key: (The lower the value, the better)");
+		System.out.println("\nMost likely character at each position for key length " + keyLength + ": (The lower the value, the better)");
 		for (int i = 0; i < keyLength; i++) {
-			System.out.print(i+1 + ": ");
+			System.out.print("Letter " + (i+1) + ": ");
 			for (int j = 0; j < 3; j++) {
 				System.out.print(possibleChars.get(i).get(j) + " ");
 			}
 			System.out.println();
 		}
+		
+		// Decrypt the text
+		System.out.println("\nDecrypted text with key \"" + key + "\":\n" + DecryptionUtils.decrypt(text, key));
 		
 	}
 	

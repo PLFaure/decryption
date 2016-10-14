@@ -7,6 +7,24 @@ import java.util.List;
  
 public class DecryptionUtils
 {  
+	/**
+	 * Decrypts a vigenere crypted text when knowing the key
+	 * @param text
+	 * @param key
+	 * @return
+	 */
+	public static String decrypt(String text, String key){
+		String decryptedText = "";
+		
+        for (int i = 0, j = 0; i < text.length(); i++) {
+            char c = text.charAt(i);
+            decryptedText += (char)((c - key.charAt(j) + 26) % 26 + 'a');
+            j = ++j % key.length();
+        }
+		
+		return decryptedText;
+	}
+	
     public static String slideString(String text, int nb)
     {
         int []  temp= new int[text.length()];
