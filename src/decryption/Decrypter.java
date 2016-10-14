@@ -3,6 +3,8 @@ package decryption;
 import java.util.ArrayList;
 import java.util.List;
 
+import decryption.KeyFinder.CharacterFitness;
+
 /**
  * Decrypter class.
  * 
@@ -13,17 +15,31 @@ public class Decrypter {
 	
 	public static void main(String[] args) {
 		
-		String text= getAnotherText();
+		// Initialize
+		int keyLength = 2; // MANUALLY CHANGE THIS VALUE TO FIND KEY
+		String text= getText();
 		PatternFinder patternFinder = new PatternFinder();
 		KeyFinder keyFinder = new KeyFinder();
-		List<Pattern> patternList = new ArrayList<Pattern>();
+		List<PatternFinder.Pattern> patternList = new ArrayList<PatternFinder.Pattern>();
+		List<List<CharacterFitness>> possibleChars = new ArrayList<List<CharacterFitness>>();
 		
+		// Find the patterns
 		patternList = patternFinder.execute(text, 8, 4);
+		System.out.println("Most common patterns found: ");
 		for (int i = 0; i < 10; i++){
 			System.out.println(patternList.get(i));
 		}
 		
-		System.out.println("The most likely key is: " + keyFinder.execute(text, 4));
+		// Find the key
+		possibleChars = keyFinder.execute(text, keyLength);
+		System.out.println("\nMost likely character for each letter in the key: (The lower the value, the better)");
+		for (int i = 0; i < keyLength; i++) {
+			System.out.print(i+1 + ": ");
+			for (int j = 0; j < 3; j++) {
+				System.out.print(possibleChars.get(i).get(j) + " ");
+			}
+			System.out.println();
+		}
 		
 	}
 	

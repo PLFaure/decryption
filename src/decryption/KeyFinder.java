@@ -1,5 +1,7 @@
 package decryption;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -7,6 +9,27 @@ import java.util.Map;
 public class KeyFinder {
 	
 	private HashMap<Character, Float> frenchOccurrenceFrequencies = null;
+	
+	public class CharacterFitness implements Comparable<CharacterFitness>
+	{
+		public char character;
+		public float fitness;
+		
+		public CharacterFitness(char c, float f){
+			character = c;
+			fitness = f;
+		}
+		
+		@Override
+		public String toString(){
+			return character + "(" + String.format("%.01f", fitness) + ")";
+		}
+		
+		@Override
+		public int compareTo(CharacterFitness other) {
+			return (int) (fitness * 100 - other.fitness * 100);
+		}
+	}
 	
 	public KeyFinder()
 	{
@@ -29,17 +52,18 @@ public class KeyFinder {
 	 * @param keyLength
 	 * @return
 	 */
-	public String execute(String text, int keyLength)
+	public List<List<CharacterFitness>> execute(String text, int keyLength)
 	{
-		String probableKey = "";
+		//String probableKey = "";
+		List<List<CharacterFitness>> possibleChars = new ArrayList<List<CharacterFitness>>();
 		Map<Character, Map<Character, Float>> frequencies;
 		List<String> splicedText = DecryptionUtils.textSplicer(text, keyLength);
 		for(String splice: splicedText){
 			frequencies = slideAndFindFrequencies(splice);
-			probableKey += selectMostProbableChar(frequencies);
+			possibleChars.add(selectMostProbableChar(frequencies));
 		}
 		
-		return probableKey;
+		return possibleChars;
 	}
 	
 	/**
@@ -47,10 +71,11 @@ public class KeyFinder {
 	 * @param frequencies
 	 * @return
 	 */
-	private char selectMostProbableChar(Map<Character, Map<Character, Float>> frequencies)
+	private List<CharacterFitness> selectMostProbableChar(Map<Character, Map<Character, Float>> frequencies)
 	{
-		char bestChar = '-';
-		float bestFitness = Float.MAX_VALUE;
+		List<CharacterFitness> fitnesses = new ArrayList<CharacterFitness>();
+		/*char bestChar = '-';
+		float bestFitness = Float.MAX_VALUE;*/
 		float fitness;
 		Map<Character, Float> tmp;
 		
@@ -60,12 +85,14 @@ public class KeyFinder {
 			for(char checkChar : tmp.keySet()){ // calculate fitness
 				fitness += Math.abs(tmp.get(checkChar) - frenchOccurrenceFrequencies.get(checkChar));
 			}
-			if (fitness < bestFitness){ // if the overall distance to actual frequencies is lower
+			fitnesses.add(new CharacterFitness(alphabetChar, fitness));
+			/*if (fitness < bestFitness){ // if the overall distance to actual frequencies is lower
 				bestFitness = fitness; // save it
 				bestChar = alphabetChar;
-			}
+			}*/
 		}
-		return bestChar;
+		Collections.sort(fitnesses);
+		return fitnesses;
 	}
 	
 	/**
