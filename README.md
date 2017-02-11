@@ -1,2 +1,2 @@
 # Decryption
-Helps you to decrypt Vigenère cipher.
+Vigenère cipher decryption program.
