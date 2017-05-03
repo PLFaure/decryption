@@ -1,2 +1,2 @@
 # Decryption
-Vigenère cipher decryption program.
+A program using a probability based heuristic to decrypt Vigenère-crypted messages.
